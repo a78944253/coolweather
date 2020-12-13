@@ -5,6 +5,7 @@ import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Build;
@@ -21,6 +22,7 @@ import android.widget.Toast;
 
 import com.bjut.mcy.coolweather.gson.Forecast;
 import com.bjut.mcy.coolweather.gson.Weather;
+import com.bjut.mcy.coolweather.service.AutoUpdateService;
 import com.bjut.mcy.coolweather.util.HttpUtil;
 import com.bjut.mcy.coolweather.util.Utility;
 import com.bumptech.glide.Glide;
@@ -148,6 +150,9 @@ public class WeatherActivity extends AppCompatActivity {
                             editor.apply();
                             mWeatherId = weather.basic.weatherId;
                             showWeatherInfo(weather);
+                            Intent intent = new Intent("com.bjut.mcy.coolweather.servicr.AutoUpdateService");
+                            intent.setPackage(getPackageName());
+                            startService(intent);
                         } else {
                             Toast.makeText(WeatherActivity.this, "获取天气信息失败", Toast.LENGTH_SHORT).show();
                         }
